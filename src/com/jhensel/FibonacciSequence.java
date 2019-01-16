@@ -6,19 +6,19 @@ package com.jhensel;
  */
 
 public class FibonacciSequence {
-    private int position = 10;
+    private long position = 10;
 
     FibonacciSequence(){
         // Defaults to position 10
     }
 
-    FibonacciSequence(int p){
+    FibonacciSequence(long p){
         if (p < 0)
             throw new IllegalArgumentException("Must be positive value");
         position = p;
     }
 
-    int solve() {
+    long solve() {
         // Default cases if 0 or 1
         if (position == 0) return 0;
         if (position == 1) return 1;
@@ -26,7 +26,7 @@ public class FibonacciSequence {
         return solveHelper(2, 0, 1);
     }
 
-    int solveHelper(int index, int firstPrevious, int secondPrevious) {
+    long solveHelper(long index, long firstPrevious, long secondPrevious) {
         if (index == position) {
             return firstPrevious + secondPrevious;
         } else {
@@ -40,11 +40,14 @@ public class FibonacciSequence {
 
         // Optional arg can be passed in with the index we want to find
         if (args.length > 0) {
-            int given = -1;
+            long given = -1;
             try {
-                given = Integer.parseInt(args[0]);
+                given = Long.parseLong(args[0]);
             } catch (Exception e) {
-                System.out.println("Input must be a numeric value " + e.getLocalizedMessage());
+                System.out.println("Input must be a numeric value: " + e.getLocalizedMessage());
+            }
+            if (given > 92) {
+                throw new IllegalArgumentException("Only supports up to a max index of 92 due to long overflow");
             }
             if (given > 0) {
                 fs = new FibonacciSequence(given);
@@ -54,7 +57,7 @@ public class FibonacciSequence {
         }
 
         if (fs != null) {
-            int result = fs.solve();
+            long result = fs.solve();
             System.out.println("Result: " + result);
         }
     }
